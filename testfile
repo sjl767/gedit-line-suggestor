@@ -1,0 +1,16 @@
+This Is a test of what exactly happens with keyvals, and how to treat them.
+WHITE LIST:
+abcdefghijklmnopqrstuvwxyz (97-122)
+ABCDEFGHIJKLMNOPQRSTUVWXYZ (65-90)
+0123456789 (48-57)
+0123456789 (65456-65465)
+-_ (45 & 95)
+Shift L (65505)
+Shift R (65506)
+.. (65454 & 46)
+Caps-Lock (65509)
+
+
+
+TAB:
+65289
