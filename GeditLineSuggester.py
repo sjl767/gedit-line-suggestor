@@ -91,6 +91,7 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
             markone = buf.get_iter_at_mark(buf.get_mark("markone"))
             marktwo = buf.get_iter_at_mark(buf.get_mark("marktwo"))
             print ( buf.get_text( markone , marktwo , True ) )
+            print ( buf.get_text( buf.get_start_iter() , buf.get_iter_at_line( 1 ) )[:-1] )
                               
       def iterclear( self ):
             buf = self.view.get_buffer()
