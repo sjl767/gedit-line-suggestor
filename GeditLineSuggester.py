@@ -27,24 +27,12 @@ class GeditLineSuggesterWindowActivatable( GObject.Object , Gedit.WindowActivata
       
       __gtype_name__ = "GeditLineSuggesterActivatable"
       window = GObject.property(type=Gedit.Window)
-      global library
-      library = {}
 
       def __init__(self):
             GObject.Object.__init__(self)
 
       def do_activate( self ):
-            langs = open( 'Languages.txt' , 'r' )
-            membs = 0
-            for line in langs:
-                  langname = line.find( "*" )
-                  key = line[ 0:langname ]
-                  val = line[ langname+1: ]
-                  print ( "Adding language named:" , key )
-                  if not key in library:
-                        library[key] = val
-                  print ( library["Woo"] )
-            langs.close()
+            pass
             
       def do_deactivate( self ):
             pass
@@ -57,6 +45,8 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
 
       __gtype_name__ = "GeditLineSuggesterViewActivatable"
       view = GObject.property( type = Gedit.View )
+      global library
+      library = {}
       
       def __init__( self ):
             GObject.Object.__init__( self )
@@ -68,6 +58,17 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
             buf = self.view.get_buffer()
             buf.create_mark( "markone" , buf.get_start_iter() , True )
             buf.create_mark( "marktwo" , buf.get_start_iter() , True )
+            langs = open( 'Languages.txt' , 'r' )
+            membs = 0
+            for line in langs:
+                  langname = line.find( "*" )
+                  key = line[ 0:langname ]
+                  val = line[ langname+1: ]
+                  print ( "Adding language named:" , key )
+                  if not key in library:
+                        library[key] = val
+                  print ( library["Woo"] )
+            langs.close()
             
       def do_deactivate( self ):
             pass
