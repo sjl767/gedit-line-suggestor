@@ -1,9 +1,0 @@
-[Plugin]
-Loader=python
-Module=gedit-line-suggestor
-IAge=3
-Name=line-suggestor
-Description=A plugin for gedit that suggests possible syntax/functions based on a text file.
-Authors=Si Jing Lim <sjl767@mun.ca>, Zachary Faulkner-Koszegi <ztkf85@mun.ca>
-Copyright=Copyright © Year Person
-Website=n/a
