@@ -1,3 +1,4 @@
+#Woo*Python*
 from gettext import gettext as _
 from gi.repository import Gtk, Gdk, Gio, GLib, GtkSource, Gedit, GObject
 import signals , string
@@ -7,6 +8,10 @@ class GeditLineSuggesterPlugin( GObject.Object , Gedit.WindowActivatable ):
 
       __gtype_name__ = "GeditLineSuggester"
       window = GObject.property(type=Gedit.Window)
+      global librarystrings
+      librarystrings = ""
+      global library
+      library = {}
       global whitelist
       whitelist = [45 , 46 , 48 , 49 , 50 , 51 , 52 , 53 , 54 , 55 , 56 , 57 , 65 , 66 , 67 , 68 , 69 , 70 , 71 , 72 , 73 , 74 , 75 , 76 , 77 , 78 , 79 , 80 , 81 , 82 , 83 , 84 , 85 , 86 , 87 , 88 , 89 , 90 , 95 , 97 , 98 , 99 , 100 , 101 , 102 , 103 , 104 , 105 , 106 , 107 , 108 , 109 , 110 , 111 , 112 , 113 , 114 , 115 , 116 , 117 , 118 , 119 , 120 , 121 , 122 , 65456 , 65457 , 65458 , 65459 , 65460 , 65461 , 65462 , 65463 , 65464 , 65465 , 65505 , 65506 , 65509 ]
       
@@ -45,8 +50,8 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
 
       __gtype_name__ = "GeditLineSuggesterViewActivatable"
       view = GObject.property( type = Gedit.View )
-      global library
-      library = {}
+      librarystrings = None
+
       
       def __init__( self ):
             GObject.Object.__init__( self )
@@ -63,7 +68,7 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
             for line in langs:
                   langname = line.find( "*" )
                   key = line[ 0:langname ]
-                  val = line[ langname+1: ]
+                  val = line[ langname+1:-1 ]
                   print ( "Adding language named:" , key )
                   if not key in library:
                         library[key] = val
@@ -75,6 +80,7 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
             
       def do_update_state( self ):
             pass
+                   
       
       def key_release( self , view , event ):
             if event.keyval in whitelist:        
@@ -91,7 +97,27 @@ class GeditLineSuggesterViewActivatable( GObject.Object , Gedit.ViewActivatable 
             markone = buf.get_iter_at_mark(buf.get_mark("markone"))
             marktwo = buf.get_iter_at_mark(buf.get_mark("marktwo"))
             print ( buf.get_text( markone , marktwo , True ) )
-            print ( buf.get_text( buf.get_start_iter() , buf.get_iter_at_line( 1 ) )[:-1] )
+            print ( buf.get_text( buf.get_start_iter() , buf.get_iter_at_line( 1 ), False )[:-1] )
+
+            global librarystrings
+            buf = self.view.get_buffer()
+            print ( "the firstline is ")
+            print ( buf.get_text( buf.get_start_iter() , buf.get_iter_at_line( 1 ), False )[:-1] )
+            firstline = ( buf.get_text( buf.get_start_iter() , buf.get_iter_at_line( 1 ), False )[:-1]  )
+            pos1 = 1
+            i = 0
+            print (firstline)
+            print (len(firstline))
+            for entry in firstline:
+                  print ("i am in the loop")
+                  pos2 = firstline.find("*", pos1, len(firstline)-1 ) 
+                  print ( pos2 )
+                  if pos2 != -1:
+                        print ( firstline[pos1:pos2] )
+                        librarystrings = librarystrings + firstline[pos1:pos2]
+                        pos1 = pos2
+                  #print ( librarystrings )
+                  
                               
       def iterclear( self ):
             buf = self.view.get_buffer()
